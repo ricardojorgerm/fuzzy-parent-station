@@ -72,10 +72,6 @@ def geographic_centroid_utm(latitudes, longitudes):
 parent_stations = []
 parent_station_counter = 1
 
-# Ensure all IDs are strings
-df = df.astype({'stop_id': str, 'parent_station': str})
-
-
 for prefix, group in grouped:
     if len(group) <= 1:
         continue
@@ -100,11 +96,11 @@ for prefix, group in grouped:
     df.loc[group.index, 'parent_station'] = parent_station_id
 
 # Create a DataFrame for the parent stations
-parent_stations_df = pd.DataFrame(parent_stations)
-parent_stations_df = parent_stations_df.astype({'stop_id': str, 'parent_station': str})
+parent_stations_df = pd.DataFrame(parent_stations, dtype=str)
 
 # Concatenate the parent stations to the main DataFrame
 df = pd.concat([df, parent_stations_df], ignore_index=True)
+df.fillna('', inplace=True)
 
 # Drop auxiliary columns
 df = df.drop('stop_name_normalized', axis=1)
