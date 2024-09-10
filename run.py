@@ -32,7 +32,7 @@ for prefix in prefixes:
     # Find best matches within the unique prefixes
     matches = process.extract(prefix, prefixes, scorer=fuzz.ratio, limit=None, processor=utils.default_process)
     # Group matches with a score above a threshold (e.g., 80)
-    similar_prefixes = [match[0] for match in matches if match[1] >= 90]
+    similar_prefixes = [match[0] for match in matches if match[1] >= 95]
     group_key = min(similar_prefixes, key=len)  # Choose the shortest match as the key
     if group_key not in grouped_prefixes:
         grouped_prefixes[group_key] = set()
